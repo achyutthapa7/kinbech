@@ -1,35 +1,75 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import Dashboard from "./components/dashboard/Dashboard";
+import Signup from "./components/signup/Signup";
+import Home from "./components/home/Home";
+import Login from "./components/login/Login";
+import Verification from "./components/verification/Verification";
+import Navbar from "./components/nav/Navbar";
 
-function App() {
-  const [count, setCount] = useState(0);
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
+  useEffect(() => {
+    const auth = async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_DEVELOPMENT_API}/isauthenticated`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      setCurrentUser(data.user.userName);
+      setIsAuthenticated(true);
+    };
+    auth();
+  }, [isAuthenticated, currentUser]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Achyut Thapa</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <Navbar
+        isAuthenticated={isAuthenticated}
+        currentUser={currentUser}
+        setIsAuthenticated={setIsAuthenticated}
+      />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Dashboard
+              currentUser={currentUser}
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            />
+          }
+        />
+        <Route
+          path="/signup"
+          element={<Signup isAuthenticated={isAuthenticated} />}
+        />
+        <Route
+          path="/login"
+          element={
+            <Login
+              setCurrentUser={setCurrentUser}
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            />
+          }
+        />
+        <Route
+          path="/verification"
+          element={<Verification isAuthenticated={isAuthenticated} />}
+        />
+      </Routes>
+    </div>
   );
-}
+};
 
 export default App;
