@@ -7,11 +7,7 @@ const Navbar = ({
   setIsAuthenticated = () => {},
 }) => {
   const navigate = useNavigate();
-  //   useEffect(() => {
-  //     if (!isAuthenticated) {
-  //       navigate("/login");
-  //     }
-  //   }, [currentUser, isAuthenticated, navigate]);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
@@ -41,6 +37,7 @@ const Navbar = ({
     } catch (error) {
       console.log(error);
     }
+    
   };
 
   return (

@@ -11,11 +11,10 @@ const Dashboard = ({
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
+      return null;
     }
   }, [currentUser, isAuthenticated, navigate]);
-  if (!isAuthenticated) {
-    return null;
-  }
+
   const logout = async () => {
     try {
       const res = await fetch(
