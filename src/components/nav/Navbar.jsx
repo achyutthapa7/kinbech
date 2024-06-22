@@ -6,9 +6,10 @@ const Navbar = ({
   currentUser,
   setIsAuthenticated = () => {},
 }) => {
+  const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && location.pathname != "/") {
       navigate("/login");
     }
   }, [isAuthenticated]);
@@ -25,16 +26,13 @@ const Navbar = ({
 
   const handleLogout = async () => {
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API}/logout`,
-        {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`${import.meta.env.VITE_API}/logout`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+      });
       if (res.ok) {
         setIsAuthenticated(false);
       }
