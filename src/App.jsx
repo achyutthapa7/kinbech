@@ -13,16 +13,13 @@ const App = () => {
   const [isVerified, setIsVerified] = useState(false);
   useEffect(() => {
     const auth = async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API}/isauthenticated`,
-        {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`${import.meta.env.VITE_API}/isauthenticated`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+      });
       const data = await res.json();
       setCurrentUser(data.user.userName);
       setIsAuthenticated(true);
