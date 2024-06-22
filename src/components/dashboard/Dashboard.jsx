@@ -11,14 +11,14 @@ const Dashboard = ({
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
-      return null;
+      
     }
   }, [currentUser, isAuthenticated, navigate]);
 
   const logout = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_DEVELOPMENT_API}/logout`,
+        `${import.meta.env.VITE_API}/logout`,
         {
           method: "GET",
           headers: {

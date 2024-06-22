@@ -20,7 +20,7 @@ const Login = ({ setIsAuthenticated = () => {}, isAuthenticated }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await fetch(`https://kinbech-server.vercel.app/login`, {
+      const res = await fetch(`${import.meta.env.VITE_API}/login`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

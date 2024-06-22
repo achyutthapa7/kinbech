@@ -14,7 +14,7 @@ const App = () => {
   useEffect(() => {
     const auth = async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_DEVELOPMENT_API}/isauthenticated`,
+        `${import.meta.env.VITE_API}/isauthenticated`,
         {
           method: "GET",
           headers: {

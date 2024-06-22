@@ -50,7 +50,7 @@ const Signup = ({ isAuthenticated }) => {
     } else {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_DEVELOPMENT_API}/registration`,
+          `${import.meta.env.VITE_}/registration`,
           {
             method: "POST",
             headers: {

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 const Navbar = ({
   isAuthenticated,
   currentUser,
   setIsAuthenticated = () => {},
 }) => {
   const navigate = useNavigate();
-
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
@@ -22,7 +26,7 @@ const Navbar = ({
   const handleLogout = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_DEVELOPMENT_API}/logout`,
+        `${import.meta.env.VITE_API}/logout`,
         {
           method: "GET",
           headers: {
@@ -37,7 +41,6 @@ const Navbar = ({
     } catch (error) {
       console.log(error);
     }
-    
   };
 
   return (

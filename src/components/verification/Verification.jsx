@@ -21,17 +21,14 @@ const Verification = ({ isAuthenticated }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_DEVELOPMENT_API}/verification`,
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({ verificationCode: enteredCode }),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`${import.meta.env.VITE_API}/verification`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ verificationCode: enteredCode }),
+        credentials: "include",
+      });
       const data = await res.json();
 
       if (res.status === 200) {
