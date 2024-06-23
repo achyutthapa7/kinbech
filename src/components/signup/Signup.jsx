@@ -49,26 +49,23 @@ const Signup = ({ isAuthenticated }) => {
       setIsLoading(false);
     } else {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_}/registration`,
-          {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-              firstName,
-              lastName,
-              gender,
-              dateOfBirth,
-              emailAddress,
-              userName,
-              password,
-              confirmPassword,
-            }),
-            credentials: "include",
-          }
-        );
+        const res = await fetch(`${import.meta.env.VITE_API}/registration`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            gender,
+            dateOfBirth,
+            emailAddress,
+            userName,
+            password,
+            confirmPassword,
+          }),
+          credentials: "include",
+        });
         const data = await res.json();
 
         if (res.status === 200) {
@@ -218,6 +215,7 @@ const Signup = ({ isAuthenticated }) => {
               />
             </div>
             <button
+             disabled={isLoading}
               type="submit"
               className="cursor-pointer w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 active:bg-blue-700"
             >
